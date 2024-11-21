@@ -34,6 +34,19 @@ El uso de componentes no controlados solo permite implementar validaciones cuand
 - [Plantilla de Código Base: Simple Form](https://gist.github.com/warderer/609ef41b6e934597105914aa70ccc0f2#file-simpleform-jsx)
 - [Plantilla de Código: React Hook Form](https://gist.github.com/warderer/609ef41b6e934597105914aa70ccc0f2#file-reacthookform-jsx)
 
+## Comandos de Apoyo
+Creación de proyecto nuevo con Vite:
+```bash
+npm create vite@latest 01-react-forms -- --template react
+cd 01-react-forms
+npm install
+```
+
+Instalar dependencia react-hook-form
+```shell
+npm install react-hook-form
+```
+
 <br />
 
 # 2. Contexto (createContext y useContext)
