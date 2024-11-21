@@ -1,11 +1,13 @@
 import './App.css'
-import SimpleForm from './pages/SimpleForm'
+import ReactHookForm from './pages/ReactHookForm'
+// import SimpleForm from './pages/SimpleForm'
 
 function App() {
 
   return (
     <>
-      <SimpleForm />
+      {/* <SimpleForm /> */}
+      <ReactHookForm />
     </>
   )
 }
