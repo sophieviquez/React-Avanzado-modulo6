@@ -58,6 +58,77 @@ npm install react-hook-form
 ## Introducción a Context
 A medida que las aplicaciones React crecen en tamaño y complejidad, compartir datos entre múltiples componentes puede volverse desafiante. Si bien es posible pasar información a través de las props, este enfoque puede resultar engorroso cuando los datos deben ser accesibles por múltiples niveles de componentes. Aquí es donde el Contexto (y su hook asociado, useContext) se convierte en una solución poderosa para la gestión eficiente de estados globales.
 
+### ¿Qué es el Contexto en React?
+El Contexto es una API incorporada en React que permite compartir datos globales (como temas, configuraciones de usuario o autenticación) entre componentes, sin necesidad de pasar props manualmente a través de cada nivel del árbol de componentes. Esto mejora la legibilidad y la escalabilidad del código.
+
+El Contexto se compone de tres partes principales:
+
+- **El Contexto:** Definir un objeto de contexto usando createContext de React.
+- **Proveedor de Contexto:** Utilizar un componente <Provider> para envolver aquellos componentes que necesitan acceder al contexto, especificando el valor que se desea compartir. El <Provider>, como su nombre lo dice, se encargará de proveer el contexto, por lo que contendrá la información que se compartirá y además delimitará de donde a donde existe el contexto. Normalmente envuelve a un componente de orden superior en la jerarquía de componentes de React, ya que él y toda su descendencia, tendrán acceso al contexto.
+- **Consumo del Contexto:** Recuperar los datos del contexto utilizando el hook useContext de React en los componentes hijos.
+
+### Ejemplo básico de Context
+En este ejemplo, TemaProveedor proporciona el estado tema y la función alternarTema a todos los componentes que lo necesiten, eliminando la necesidad de pasar props manualmente.
+```jsx
+import React, { createContext, useContext, useState } from "react";
+
+// Creación del Contexto | Context
+const TemaContexto = createContext();
+
+// Componente Proveedor | Provider
+const TemaProveedor = ({ children }) => {
+  const [tema, setTema] = useState("claro");
+
+  const alternarTema = () => {
+    setTema((prev) => (prev === "claro" ? "oscuro" : "claro"));
+  };
+
+  return (
+    <TemaContexto.Provider value={{ tema, alternarTema }}>
+      {children}
+    </TemaContexto.Provider>
+  );
+};
+
+// Componente Consumidor | Consumer
+const BotonTema = () => {
+  const { tema, alternarTema } = useContext(TemaContexto);
+
+  return (
+    <button onClick={alternarTema}>
+      Cambiar a tema {tema === "claro" ? "oscuro" : "claro"}
+    </button>
+  );
+};
+
+export const App = () => (
+  <TemaProveedor>
+    <div>
+      <h1>Gestión de Tema con Contexto</h1>
+      <BotonTema />
+    </div>
+  </TemaProveedor>
+);
+```
+
+
+### ¿Qué es Children?
+`children` es una propiedad especial que se pasa automáticamente a los componentes React y que contiene cualquier contenido (componentes, texto, etc.) que esté anidado dentro del componente.
+
+Por ejemplo, si tienes un componente como este:
+```jsx
+const Componente = ({ children }) => {
+  return <div>{children}</div>;
+};
+```
+puedes usarlo así:
+
+```jsx
+<Componente>
+  <p>Este es el contenido hijo</p>
+</Componente>
+```
+
 ## Recursos
 - [Documentación Oficial de Context](https://react.dev/learn/passing-data-deeply-with-context)
 
