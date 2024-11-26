@@ -1,5 +1,5 @@
-import { createContext } from 'react'
-
+import { createContext, useEffect, useState } from 'react'
+import canciones from '@/assets/listaCanciones.json'
 // CONTEXT tiene que ver con el manejo de estados globales en React.
 // Es decir, poder compartir LA MISMA información entre DIFERENTES niveles de componentes, de forma directa.
 
@@ -12,9 +12,20 @@ const SongContext = createContext()
 // En este caso, el proveedor es un COMPONENTE que envuelve a los componentes que necesitan acceder a la información (el contexto). La información se comparte a través de un prop especial llamado "value".
 
 function SongProvider ({children}) {
+    const [list, setList] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    // Simulo una llamada a una API
+    useEffect(() => {
+        setTimeout(() => {
+          setList(canciones)
+          setLoading(false)
+        }, 2000)
+      }, [])
 
     const data = {
-
+      list,
+      loading
     }
 
     return (
