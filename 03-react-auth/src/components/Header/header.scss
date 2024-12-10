@@ -1,38 +1,39 @@
 $menu-color: #3d3d3d;
 
 @mixin header-link {
-    color: $menu-color;
-    text-decoration: none;
-    letter-spacing: 2px;
+  color: $menu-color;
+  text-decoration: none;
+  letter-spacing: 2px;
 }
 
 .header {
-    background-color: #d1d1d1;
+  background-color: #d1d1d1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+
+  &__logo {
+    @include header-link;
+  }
+
+  &__nav-list {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
+    flex-wrap: wrap;
+    list-style: none;
+    column-gap: 20px;
+  }
 
-    &__logo {
-        @include header-link;
+  &__item-link {
+    @include header-link;
+
+    &:hover {
+      border-bottom: solid 2px $menu-color;
     }
 
-    &__nav-list {
-        display: flex;
-        flex-wrap: wrap;
-        list-style: none;
-        column-gap: 20px;
+    &--is-active {
+      color: #000;
+      border-bottom: solid 2px $menu-color;
     }
-
-    &__item-link {
-        @include header-link;
-
-        &:hover {
-            border-bottom: solid 2px $menu-color;
-        }
-
-        &--is-active {
-            color: #000;
-        }
-    }
+  }
 }

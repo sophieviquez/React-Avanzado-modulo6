@@ -1,28 +1,73 @@
-import './header.scss'
+import { NavLink } from "react-router-dom";
+import { useAuthContext } from "@/hooks/useAuth";
+import "./header.scss";
 
 const Header = () => {
-  return (
-    <nav className='header'>
-        <a href='/' className='header__logo'>LOGO</a>
+  const { isAuth, logout } = useAuthContext();
 
-        <ul className='header__nav-list'>
-            <li className='header__list-item'>
-                <a href='/' className='header__item-link header__item-link--is-active'>Home</a>
+  const linkIsActive = (isActive) =>
+    isActive
+      ? "header__item-link header__item-link--is-active"
+      : "header__item-link";
+
+  return (
+    <nav className="header">
+      <NavLink to="/" className="header__logo">
+        LOGO
+      </NavLink>
+
+      <ul className="header__nav-list">
+        <li className="header__list-item">
+          <NavLink to="/" className={({ isActive }) => linkIsActive(isActive)}>
+            Home
+          </NavLink>
+        </li>
+        <li className="header__list-item">
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) => linkIsActive(isActive)}
+          >
+            Dashboard
+          </NavLink>
+        </li>
+        {isAuth ? (
+          <>
+            <li className="header__list-item">
+              <NavLink
+                to="/secret"
+                className={({ isActive }) => linkIsActive(isActive)}
+              >
+                Secret
+              </NavLink>
             </li>
-            <li className='header__list-item'>
-                <a href='/dashboard' className='header__item-link'>Dashboard</a>
+            <li className="header__list-item">
+              <NavLink to="/" className="header__item-link" onClick={logout}>
+                Logout
+              </NavLink>
             </li>
-            <li className='header__list-item'>
-                <a href='/secret' className='header__item-link'>Secret</a>
+          </>
+        ) : (
+          <>
+            <li className="header__list-item">
+              <NavLink
+                to="/login"
+                className={({ isActive }) => linkIsActive(isActive)}
+              >
+                Login
+              </NavLink>
             </li>
-            <li className='header__list-item'>
-                <a href='/login' className='header__item-link'>Login</a>
+            <li className="header__list-item">
+              <NavLink
+                to="/signup"
+                className={({ isActive }) => linkIsActive(isActive)}
+              >
+                Signup
+              </NavLink>
             </li>
-            <li className='header__list-item'>
-                <a href='/register' className='header__item-link'>Signup</a>
-            </li>
-        </ul>
+          </>
+        )}
+      </ul>
     </nav>
-  )
-}
-export default Header
+  );
+};
+export default Header;
